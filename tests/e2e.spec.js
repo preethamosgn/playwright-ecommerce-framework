@@ -63,7 +63,7 @@ test.describe("E2E Flow", () => {
 
     //Verify successful order completion
     await expect(checkOutPage.successMessage).toHaveText(
-      "Thank you for your order!",
+      "Thank you for your order wrong!",
     );
   });
 });
