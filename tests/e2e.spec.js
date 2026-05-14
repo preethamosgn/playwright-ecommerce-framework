@@ -22,12 +22,12 @@ test.describe("E2E Flow", () => {
     await expect(page).toHaveURL(/inventory/);
   });
 
-  test("Verify user can add product to cart", async ({ page }) => {
+  test("@smoke Verify user can add product to cart", async ({ page }) => {
     await productsPage.addProductsToCart();
     await expect(productsPage.getCartCount()).toHaveText("6");
   });
 
-  test("Verify user can view items in cart", async ({ page }) => {
+  test("@regression Verify user can view items in cart", async ({ page }) => {
     await productsPage.addProductsToCart();
 
     await cartPage.openCart();
@@ -41,7 +41,9 @@ test.describe("E2E Flow", () => {
     await cartPage.removeItem(0);
   });
 
-  test("Verify user can complete checkout successfully", async ({ page }) => {
+  test("@smoke Verify user can complete checkout successfully", async ({
+    page,
+  }) => {
     await productsPage.addProductsToCart();
 
     await cartPage.openCart();
