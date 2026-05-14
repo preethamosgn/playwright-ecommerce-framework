@@ -26,6 +26,8 @@ pipeline {
         stage('Run Playwright Tests') {
             steps {
                 script {
+                    echo "Selected Test Suite: ${params.TEST_SUITE}"
+                    
                     if (params.TEST_SUITE == 'smoke') {
                         bat 'npx playwright test --grep "@smoke"'
                     } else if (params.TEST_SUITE == 'regression') {
