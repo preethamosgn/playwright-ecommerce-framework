@@ -69,5 +69,7 @@ test.describe("E2E Flow", () => {
     );
   });
 
-  console.log("Automation test done end to end");
+  console.log("Automation test success");
+  
+  
 });
