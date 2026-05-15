@@ -68,4 +68,7 @@ test.describe("E2E Flow", () => {
       "Thank you for your order!",
     );
   });
+
+  console.log("success");
+  
 });
