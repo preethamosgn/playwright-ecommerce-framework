@@ -1,0 +1,59 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: e2e.spec.js >> E2E Flow >> @regression Verify user can view items in cart
+- Location: tests\e2e.spec.js:30:7
+
+# Error details
+
+```
+Error: page.goto: net::ERR_INTERNET_DISCONNECTED at https://www.saucedemo.com/
+Call log:
+  - navigating to "https://www.saucedemo.com/", waiting until "load"
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - heading "Press space to play" [level=1] [ref=e6]
+    - generic [ref=e7]:
+      - paragraph [ref=e8]: "Try:"
+      - list [ref=e9]:
+        - listitem [ref=e10]: Checking the network cables, modem, and router
+        - listitem [ref=e11]: Reconnecting to Wi-Fi
+        - listitem [ref=e12]:
+          - link "Running Windows Network Diagnostics" [ref=e13] [cursor=pointer]:
+            - /url: javascript:diagnoseErrors()
+    - generic [ref=e14]: ERR_INTERNET_DISCONNECTED
+  - application "Dino game, press space to play" [ref=e16]
+```
+
+# Test source
+
+```ts
+  1  | class LoginPage {
+  2  |   constructor(page) {
+  3  |     this.page = page;
+  4  |     this.username = page.locator("#user-name");
+  5  |     this.password = page.locator("#password");
+  6  |     this.button = page.getByRole("button", { name: "Login" });
+  7  |   }
+  8  |   async login(url, userName, password) {
+> 9  |     await this.page.goto(url);
+     |                     ^ Error: page.goto: net::ERR_INTERNET_DISCONNECTED at https://www.saucedemo.com/
+  10 |     await this.username.fill(userName);
+  11 |     await this.password.fill(password);
+  12 |     await this.button.click();
+  13 |   }
+  14 | }
+  15 | export default LoginPage;
+  16 | 
+```
