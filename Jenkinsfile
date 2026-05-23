@@ -13,6 +13,12 @@ pipeline {
         choices: ['chromium', 'firefox', 'webkit', 'all'],
         description: 'Select browser for execution'
     )
+
+    choice(
+    name: 'HEADLESS',
+    choices: ['true', 'false'],
+    description: 'Run browser in headless mode'
+)
 }
 
     stages {
@@ -34,6 +40,7 @@ pipeline {
         script {
             echo "Selected Test Suite: ${params.TEST_SUITE}"
             echo "Selected Browser: ${params.BROWSER}"
+            echo "Headless Mode: ${params.HEADLESS}"
 
             def testCommand = 'npx playwright test'
 
@@ -46,7 +53,9 @@ pipeline {
             if (params.BROWSER != 'all') {
                 testCommand = testCommand + " --project=${params.BROWSER}"
             }
-
+            if (params.HEADLESS == 'false') {
+                testCommand = testCommand + ' --headed'
+            }
             echo "Final Command: ${testCommand}"
 
             bat testCommand
