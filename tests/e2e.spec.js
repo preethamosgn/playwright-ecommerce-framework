@@ -14,11 +14,7 @@ test.describe("E2E Flow", () => {
     cartPage = new CartPage(page);
     checkOutPage = new CheckOutPage(page);
 
-    await loginPage.login(
-      loginData.url,
-      loginData.userName,
-      loginData.password,
-    );
+    await loginPage.login(loginData.userName, loginData.password);
     await expect(page).toHaveURL(/inventory/);
   });
 

@@ -5,8 +5,12 @@ class LoginPage {
     this.password = page.locator("#password");
     this.button = page.getByRole("button", { name: "Login" });
   }
-  async login(url, userName, password) {
-    await this.page.goto(url);
+
+  async open() {
+    await this.page.goto("/");
+  }
+  async login(userName, password) {
+    await this.open()
     await this.username.fill(userName);
     await this.password.fill(password);
     await this.button.click();
