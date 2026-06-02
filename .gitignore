@@ -1,0 +1,13 @@
+# Dependencies
+node_modules
+
+# Playwright reports
+playwright-report
+test-results
+
+# Allure reports
+allure-report
+allure-results
+
+# Environment variables
+.env
