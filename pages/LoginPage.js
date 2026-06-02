@@ -7,13 +7,15 @@ class LoginPage {
   }
 
   async open() {
-    await this.page.goto(process.env.BASE_URL);
+    await this.page.goto("/");
   }
+
   async login(userName, password) {
-    await this.open()
+    await this.open();
     await this.username.fill(userName);
     await this.password.fill(password);
     await this.button.click();
   }
 }
+
 export default LoginPage;
