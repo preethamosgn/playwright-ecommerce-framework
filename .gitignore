@@ -11,3 +11,6 @@ allure-results
 
 # Environment variables
 .env
+
+# Storage State
+auth/storageState.json

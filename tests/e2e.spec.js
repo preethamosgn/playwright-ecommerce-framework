@@ -1,32 +1,25 @@
-import { test, expect } from "@playwright/test";
-import LoginPage from "../pages/LoginPage";
-import ProductsPage from "../pages/ProductsPage";
-import CartPage from "../pages/CartPage";
-import CheckOutPage from "../pages/CheckOutPage";
-import checkOut from "../test-data/checkOutData.json";
-import loginData from "../test-data/loginData.json";
+import { test, expect } from "../fixtures/pageFixtures";
+import { generateCheckoutData } from "../utils/dataUtils";
 
 test.describe("E2E Flow", () => {
   let loginPage, productsPage, cartPage, checkOutPage;
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    productsPage = new ProductsPage(page);
-    cartPage = new CartPage(page);
-    checkOutPage = new CheckOutPage(page);
 
-    await loginPage.login(
-      process.env.SAUCE_USERNAME,
-      process.env.SAUCE_PASSWORD,
-    );
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/inventory.html");
     await expect(page).toHaveURL(/inventory/);
   });
 
-  test("@smoke Verify user can add product to cart", async ({ page }) => {
+  test("@smoke Verify user can add product to cart", async ({
+    productsPage,
+  }) => {
     await productsPage.addProductsToCart();
     await expect(productsPage.getCartCount()).toHaveText("6");
   });
 
-  test("@regression Verify user can view items in cart", async ({ page }) => {
+  test("@regression Verify user can view items in cart", async ({
+    productsPage,
+    cartPage,
+  }) => {
     await productsPage.addProductsToCart();
 
     await cartPage.openCart();
@@ -42,7 +35,12 @@ test.describe("E2E Flow", () => {
 
   test("@smoke Verify user can complete checkout successfully", async ({
     page,
+    productsPage,
+    cartPage,
+    checkOutPage,
   }) => {
+    const checkOut = generateCheckoutData();
+
     await productsPage.addProductsToCart();
 
     await cartPage.openCart();

@@ -1,14 +1,16 @@
 // @ts-check
 import { defineConfig, devices } from "@playwright/test";
 
-import envConfig from './config/envConfig'
+import envConfig from "./config/envConfig";
 
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
 dotenv.config();
 
 export default defineConfig({
   testDir: "./tests",
+
+  globalTeardown: "./tests/global-teardown.js",
 
   // Maximum time one test can run
   timeout: 30000,
@@ -47,16 +49,35 @@ export default defineConfig({
   // Cross-browser execution
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: "setup",
+      testMatch: /.*\.setup\.js/,
     },
+
+    {
+      name: "chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "auth/storageState.json",
+      },
+      dependencies: ["setup"],
+    },
+
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: {
+        ...devices["Desktop Firefox"],
+        storageState: "auth/storageState.json",
+      },
+      dependencies: ["setup"],
     },
+
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      use: {
+        ...devices["Desktop Safari"],
+        storageState: "auth/storageState.json",
+      },
+      dependencies: ["setup"],
     },
   ],
 });
